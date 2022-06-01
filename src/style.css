@@ -45,7 +45,7 @@ h1 {
   cursor: pointer;
 }
 
-.todo-input {
+.form-container {
   background-color: white;
   border-bottom: 1px solid #c4c6d8;
 }
