@@ -1,5 +1,4 @@
-import { getTodos } from './modules/get-todos';
+import getTodos from './modules/get-todos.js';
 import './style.css';
-
 
 getTodos();
