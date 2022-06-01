@@ -6,13 +6,18 @@ const todos = [
   },
   {
     description: 'Read WebPack Tutorial',
-    completed: true,
+    completed: false,
     index: 1,
   },
   {
     description: 'Do Laundry',
-    completed: true,
+    completed: false,
     index: 2,
+  },
+  {
+    description: 'Do Cleaning',
+    completed: false,
+    index: 3,
   },
 ];
 
@@ -21,7 +26,8 @@ const todoItems = document.querySelector('.todo-items');
 
 // Functions
 const getTodos = () => {
-  todos.map((todo) => {
+  const item = todos.sort((a, b) => b.index - a.index);
+  item.map((todo, index) => {
     const todoElement = document.createElement('li');
     todoElement.classList.add('todo');
     todoElement.setAttribute('id', todo.index);

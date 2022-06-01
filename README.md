@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Hello World
+# To Do List
 
 > This is a personal todo project that allows users to manage their daily tasks.
 
