@@ -1,69 +1,29 @@
-"use strict";
 (self["webpackChunkwebpack_setup"] = self["webpackChunkwebpack_setup"] || []).push([[0],[
 /* 0 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_get_todos__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _modules_todos_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _modules_todos_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 
 
 
-
-(0,_modules_get_todos__WEBPACK_IMPORTED_MODULE_0__.getTodos)();
+_modules_todos_js__WEBPACK_IMPORTED_MODULE_0___default()();
 
 
 /***/ }),
 /* 1 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (() => {
 
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getTodos": () => (/* binding */ getTodos)
-/* harmony export */ });
-const todos = [
-    {
-      description: 'Complete Todo Project',
-      completed: false,
-      index: 0,
-    },
-    {
-      description: 'Read WebPack Tutorial',
-      completed: true,
-      index: 1,
-    },
-    {
-      description: 'Do Laundry',
-      completed: true,
-      index: 2,
-    },
-  ];
-  
-  // selectors
-  const todoItems = document.querySelector('.todo-items');
-  
-  // Functions
-  const getTodos = () => {
-    todos.map((todo) => {
-      const todoElement = document.createElement('li');
-      todoElement.classList.add('todo');
-      todoElement.setAttribute('id', todo.index);
-      const todoElMarkup = `
-              <div class="content-container">
-              <i class="fa fa-check-square check" aria-hidden="true" id="${todo.index}"></i>
-              <p>${todo.description}</p>
-              </div>
-              <i class="fa fa-ellipsis-v" aria-hidden="true" id="${todo.index}"></i>
-            `;
-      todoElement.innerHTML = todoElMarkup;
-      todoItems.appendChild(todoElement);
-    });
-  };
+
 
 /***/ }),
 /* 2 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -114,6 +74,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /* 3 */
 /***/ ((module) => {
 
+"use strict";
 
 
 var stylesInDOM = [];
@@ -223,6 +184,7 @@ module.exports = function (list, options) {
 /* 4 */
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -298,6 +260,7 @@ module.exports = domAPI;
 /* 5 */
 /***/ ((module) => {
 
+"use strict";
 
 
 var memo = {};
@@ -342,6 +305,7 @@ module.exports = insertBySelector;
 /* 6 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -359,6 +323,7 @@ module.exports = setAttributesWithoutAttributes;
 /* 7 */
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -375,6 +340,7 @@ module.exports = insertStyleElement;
 /* 8 */
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -396,6 +362,7 @@ module.exports = styleTagTransform;
 /* 9 */
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -418,6 +385,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r
 /* 10 */
 /***/ ((module) => {
 
+"use strict";
 
 
 module.exports = function (i) {
@@ -428,6 +396,7 @@ module.exports = function (i) {
 /* 11 */
 /***/ ((module) => {
 
+"use strict";
 
 
 /*
