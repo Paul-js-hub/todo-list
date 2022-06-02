@@ -38,6 +38,21 @@ h1 {
   color: black;
 }
 
+.content-container > p {
+  outline: none;
+  width: 90%;
+}
+
+.list-background {
+  background-color: #c4c6d8;
+}
+
+.trash,
+.fa-trash {
+  color: rgb(233, 47, 47);
+  cursor: pointer;
+}
+
 .refresh {
   align-self: center;
   color: #c4c6d8;
@@ -45,7 +60,7 @@ h1 {
   cursor: pointer;
 }
 
-.todo-input {
+.form-container {
   background-color: white;
   border-bottom: 1px solid #c4c6d8;
 }
@@ -54,7 +69,6 @@ input {
   font-size: 1.5rem;
   padding: 0.5rem;
   font-family: Quintessential, sans-serif;
-  width: 85%;
   border: none;
   outline: none;
   margin-left: 1rem;
@@ -76,10 +90,15 @@ input {
   font-size: 1.2rem;
 }
 
+.todo:hover {
+  background-color: #c4c6d8;
+}
+
 .content-container {
   display: flex;
   align-items: center;
   gap: 1rem;
+  width: 100%;
 }
 
 .clear-completed {
@@ -92,4 +111,9 @@ input {
 
 .clear-completed .complete {
   cursor: pointer;
+}
+
+.content-container [type="checkbox"]:checked ~ p {
+  text-decoration: line-through;
+  opacity: 0.5;
 }

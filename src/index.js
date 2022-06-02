@@ -1,4 +1,7 @@
-import getTodos from './modules/get-todos.js';
+import { getTodos, addTodo } from './modules/todos.js';
 import './style.css';
 
+const todoItems = document.querySelector('.todo-items');
+
 getTodos();
+addTodo();
