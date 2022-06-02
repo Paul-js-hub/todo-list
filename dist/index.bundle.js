@@ -12,10 +12,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const todoItems = document.querySelector(".todo-items");
 
-
 (0,_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.getTodos)();
 (0,_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.addTodo)();
-(0,_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.updateTodo)();
 
 
 /***/ }),
@@ -35,11 +33,6 @@ const todoItems = document.querySelector(".todo-items");
 const input = document.getElementById("input");
 const form = document.querySelector('.form-container');
 
-todoItems.addEventListener('input', (e) =>{
-  const todoId = e.target.closest("li").id;
-  updateTodo(todoId, e.target);
-});
-
 // Functions
 const getTodos = () => {
   const items = todos.sort((a, b) => b.index - a.index);
@@ -55,7 +48,7 @@ const getTodos = () => {
                 }>
                 <p ${!todo.completed ? "contenteditable" : ""}>${todo.description}</p>
                 </div>
-                <i class="fa fa-ellipsis-v" aria-hidden="true" id="${todo.index}"></i>
+                <i class="fa fa-ellipsis-v ellipse" aria-hidden="true" id="${todo.index}"></i>
               `;
       todoElement.innerHTML = todoElMarkup;
       todoItems.appendChild(todoElement);
@@ -86,7 +79,7 @@ const addTodo = () => {
               }>
               <p ${!todo.completed ? "contenteditable" : ""}>${todo.description}</p>
               </div>
-              <i class="fa fa-ellipsis-v" aria-hidden="true" id="${todo.index}"></i>
+              <i class="fa fa-ellipsis-v ellipse" aria-hidden="true" id="${todo.index}"></i>
             `;
       todoElement.innerHTML = todoElMarkup;
       todoItems.appendChild(todoElement);
@@ -96,15 +89,20 @@ const addTodo = () => {
 };
 
 const updateTodo = (todoId, el)=>{
-  const todo = todos.find(todo => todo.id === parseInt(todoId, 10));
-  if(el.hasAttribute("contentEditable")){
+  const todo = todos.find(todo => todo.index === parseInt(todoId, 10));
+  const element =  el.parentNode.parentNode.lastElementChild;
+  if(el.hasAttribute("contenteditable")){
     todo.description = el.textContent;
+    // element.classList.toggle('fa-ellipsis-v');
+    // element.classList.toggle('fa-trash')
   } else {
-    const p = el.nextElementSibling.nextElementSibling;
+    const p = el.nextElementSibling;
     todo.completed = !todo.completed;
     if (todo.completed) {
       p.removeAttribute("contenteditable");
       el.setAttribute("checked", "");
+    // element.classList.remove('fa-trash')
+    //   element.classList.add('fa-ellipsis-v');
     } else {
       el.removeAttribute("checked");
       p.setAttribute("contenteditable", "");
@@ -113,8 +111,40 @@ const updateTodo = (todoId, el)=>{
   localStorage.setItem("todos", JSON.stringify(todos));
 }
 
-//Listeners
+// const deleteTodo = ()=>{
+//   todoItems.addEventListener('click', (e) => {
+//     if (
+//       e.target.classList.contains('fa-trash')
+//       || e.target.parentElement.classList.contains('fa-trash')
+//     ) {
+//       const todoId = e.target.closest('li').id;
+//       todos = todos.filter(
+//         (todo) => todo.id !== parseInt(todoId, 10),
+//       );
+//       localStorage.setItem('todos', JSON.stringify(todos));
+//       document.getElementById(todoId).remove();
+//     }
+//   });
+// }
 
+// deleteTodo();
+
+//Listeners
+todoItems.addEventListener('input', (e) =>{
+  const lastEl = e.target.parentNode.parentNode.lastElementChild;
+  const todoId = e.target.closest("li").id;
+  if(lastEl.classList.contains('fa-ellipsis-v')){
+    lastEl.classList.remove('fa-ellipsis-v');
+    lastEl.classList.add('fa-trash');
+  }
+  updateTodo(todoId, e.target);
+});
+
+todoItems.addEventListener("keydown",  (e) =>{
+  if (e.keyCode === 13) {
+    e.preventDefault();
+  }
+});
 
 /***/ }),
 /* 2 */
@@ -465,7 +495,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  background-color: #f4f2f3;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.container {\r\n  border: 1px solid #9497ae;\r\n  box-shadow: 0.05rem 0.05rem 2rem;\r\n  width: 40rem;\r\n  height: auto;\r\n  margin: 7rem auto;\r\n}\r\n\r\n.header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  width: auto;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  background-color: white;\r\n}\r\n\r\nh1 {\r\n  margin: 0;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.8rem;\r\n  color: black;\r\n}\r\n\r\n.refresh {\r\n  align-self: center;\r\n  color: #c4c6d8;\r\n  margin-right: 1rem;\r\n  cursor: pointer;\r\n}\r\n\r\n.form-container {\r\n  background-color: white;\r\n  border-bottom: 1px solid #c4c6d8;\r\n}\r\n\r\ninput {\r\n  font-size: 1.5rem;\r\n  padding: 0.5rem;\r\n  font-family: Quintessential, sans-serif;\r\n  border: none;\r\n  outline: none;\r\n  margin-left: 1rem;\r\n}\r\n\r\n.todo-items {\r\n  display: flex;\r\n  flex-direction: column;\r\n  background-color: white;\r\n}\r\n\r\n.todo {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  font-family: Quintessential, sans-serif;\r\n  gap: 1rem;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  font-size: 1.2rem;\r\n}\r\n\r\n.content-container {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 1rem;\r\n}\r\n\r\n.clear-completed {\r\n  text-align: center;\r\n  padding: 1rem;\r\n  color: #9497ae;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.5rem;\r\n}\r\n\r\n.clear-completed .complete {\r\n  cursor: pointer;\r\n}\r\n\r\n.content-container [type=\"checkbox\"]:checked ~ p {\r\n  text-decoration: line-through;\r\n  opacity: 0.5;\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  background-color: #f4f2f3;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.container {\r\n  border: 1px solid #9497ae;\r\n  box-shadow: 0.05rem 0.05rem 2rem;\r\n  width: 40rem;\r\n  height: auto;\r\n  margin: 7rem auto;\r\n}\r\n\r\n.header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  width: auto;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  background-color: white;\r\n}\r\n\r\nh1 {\r\n  margin: 0;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.8rem;\r\n  color: black;\r\n}\r\np {\r\n  outline: none;\r\n}\r\n\r\n.trash, .fa-trash {\r\n  color: rgb(233, 47, 47);\r\n  cursor: pointer;\r\n}\r\n\r\n.refresh {\r\n  align-self: center;\r\n  color: #c4c6d8;\r\n  margin-right: 1rem;\r\n  cursor: pointer;\r\n}\r\n\r\n.form-container {\r\n  background-color: white;\r\n  border-bottom: 1px solid #c4c6d8;\r\n}\r\n\r\ninput {\r\n  font-size: 1.5rem;\r\n  padding: 0.5rem;\r\n  font-family: Quintessential, sans-serif;\r\n  border: none;\r\n  outline: none;\r\n  margin-left: 1rem;\r\n}\r\n\r\n.todo-items {\r\n  display: flex;\r\n  flex-direction: column;\r\n  background-color: white;\r\n}\r\n\r\n.todo {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  font-family: Quintessential, sans-serif;\r\n  gap: 1rem;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  font-size: 1.2rem;\r\n}\r\n\r\n.content-container {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 1rem;\r\n}\r\n\r\n.clear-completed {\r\n  text-align: center;\r\n  padding: 1rem;\r\n  color: #9497ae;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.5rem;\r\n}\r\n\r\n.clear-completed .complete {\r\n  cursor: pointer;\r\n}\r\n\r\n.content-container [type=\"checkbox\"]:checked ~ p {\r\n  text-decoration: line-through;\r\n  opacity: 0.5;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

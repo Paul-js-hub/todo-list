@@ -40,6 +40,12 @@ h1 {
 p {
   outline: none;
 }
+
+.trash, .fa-trash {
+  color: rgb(233, 47, 47);
+  cursor: pointer;
+}
+
 .refresh {
   align-self: center;
   color: #c4c6d8;

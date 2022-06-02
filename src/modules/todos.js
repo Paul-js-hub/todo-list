@@ -1,30 +1,25 @@
-const todos = JSON.parse(localStorage.getItem("todos")) || [];
+let todos = JSON.parse(localStorage.getItem('todos')) || [];
 
 // selectors
 const todoItems = document.querySelector(".todo-items");
 const input = document.getElementById("input");
-const form = document.querySelector(".form-container");
+const form = document.querySelector('.form-container');
 
 // Functions
 export const getTodos = () => {
-  const items = todos.sort((a, b) => b.index - a.index);
-  if (localStorage.getItem("todos")) {
-    items.map((todo) => {
+  if(localStorage.getItem('todos')){
+    todos.map((todo) => {
       const todoElement = document.createElement("li");
       todoElement.classList.add("todo");
       todoElement.setAttribute("id", todo.index);
       const todoElMarkup = `
                 <div class="content-container">
-                <input type="checkbox" id="${todo.description}-${
-        todo.index
-      }" name="tasks" ${todo.completed ? "checked" : ""}>
-                <p ${!todo.completed ? "contenteditable" : ""}>${
-        todo.description
-      }</p>
+                <input type="checkbox" id="${todo.description}-${todo.index}" name="tasks" ${
+                  todo.completed ? "checked" : ""
+                }>
+                <p ${!todo.completed ? "contenteditable" : ""}>${todo.description}</p>
                 </div>
-                <i class="fa fa-ellipsis-v" aria-hidden="true" id="${
-                  todo.index
-                }"></i>
+                <i class="fa fa-ellipsis-v ellipse" aria-hidden="true" id="${todo.index}"></i>
               `;
       todoElement.innerHTML = todoElMarkup;
       todoItems.appendChild(todoElement);
@@ -33,7 +28,6 @@ export const getTodos = () => {
 };
 
 export const addTodo = () => {
-  const items = todos.sort((a, b) => b.index - a.index);
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (input.value !== "") {
@@ -42,7 +36,7 @@ export const addTodo = () => {
         description: input.value,
         completed: false,
       };
-      items.push(todo);
+      todos.push(todo);
       window.location.reload();
       localStorage.setItem("todos", JSON.stringify(todos));
       const todoElement = document.createElement("li");
@@ -50,16 +44,12 @@ export const addTodo = () => {
       todoElement.setAttribute("id", todo.index);
       const todoElMarkup = `
               <div class="content-container">
-              <input type="checkbox" id="${todo.description}-${
-        todo.id
-      }" name="tasks" ${todo.completed ? "checked" : ""}>
-              <p ${!todo.completed ? "contenteditable" : ""}>${
-        todo.description
-      }</p>
+              <input type="checkbox" id="${todo.description}-${todo.id}" name="tasks" ${
+                todo.completed ? "checked" : ""
+              }>
+              <p ${!todo.completed ? "contenteditable" : ""}>${todo.description}</p>
               </div>
-              <i class="fa fa-ellipsis-v" aria-hidden="true" id="${
-                todo.index
-              }"></i>
+              <i class="fa fa-ellipsis-v ellipse" aria-hidden="true" id="${todo.index}"></i>
             `;
       todoElement.innerHTML = todoElMarkup;
       todoItems.appendChild(todoElement);
@@ -68,31 +58,61 @@ export const addTodo = () => {
   });
 };
 
-export const updateTodo = (todoId, el) => {
-  const todo = todos.find((todo) => todo.index === parseInt(todoId, 10));
-  if (el.hasAttribute("contenteditable")) {
+export const updateTodo = (todoId, el)=>{
+  const todo = todos.find(todo => todo.index === parseInt(todoId, 10));
+  const element =  el.parentNode.parentNode.lastElementChild;
+  if(el.hasAttribute("contenteditable")){
     todo.description = el.textContent;
+    // element.classList.toggle('fa-ellipsis-v');
+    // element.classList.toggle('fa-trash')
   } else {
     const p = el.nextElementSibling;
     todo.completed = !todo.completed;
     if (todo.completed) {
       p.removeAttribute("contenteditable");
       el.setAttribute("checked", "");
+    // element.classList.remove('fa-trash')
+    //   element.classList.add('fa-ellipsis-v');
     } else {
       el.removeAttribute("checked");
       p.setAttribute("contenteditable", "");
     }
   }
   localStorage.setItem("todos", JSON.stringify(todos));
-};
+}
+
+const deleteTodo = ()=>{
+  todoItems.addEventListener('click', (e) => {
+    if (
+      e.target.classList.contains('fa-trash')
+      || e.target.parentElement.classList.contains('fa-trash')
+    ) {
+      const todoId = e.target.closest('li').id;
+      todos = todos.filter((todo) => todo.index !== parseInt(todoId, 10));
+      todos = todos.map((todo, index) => {
+        todo.index = (index + 1);
+        return todo;
+      });
+      localStorage.setItem('todos', JSON.stringify(todos));
+      window.location.reload();
+    }
+  });
+}
+
+ deleteTodo();
 
 //Listeners
-todoItems.addEventListener("input", (e) => {
+todoItems.addEventListener('input', (e) =>{
+  const lastEl = e.target.parentNode.parentNode.lastElementChild;
   const todoId = e.target.closest("li").id;
+  if(lastEl.classList.contains('fa-ellipsis-v')){
+    lastEl.classList.remove('fa-ellipsis-v');
+    lastEl.classList.add('fa-trash');
+  }
   updateTodo(todoId, e.target);
 });
 
-todoItems.addEventListener("keydown", (e) => {
+todoItems.addEventListener("keydown",  (e) =>{
   if (e.keyCode === 13) {
     e.preventDefault();
   }
