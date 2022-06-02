@@ -37,7 +37,9 @@ h1 {
   font-size: 1.8rem;
   color: black;
 }
-
+p {
+  outline: none;
+}
 .refresh {
   align-self: center;
   color: #c4c6d8;
@@ -54,7 +56,6 @@ input {
   font-size: 1.5rem;
   padding: 0.5rem;
   font-family: Quintessential, sans-serif;
-  width: 85%;
   border: none;
   outline: none;
   margin-left: 1rem;
@@ -92,4 +93,9 @@ input {
 
 .clear-completed .complete {
   cursor: pointer;
+}
+
+.content-container [type="checkbox"]:checked ~ p {
+  text-decoration: line-through;
+  opacity: 0.5;
 }

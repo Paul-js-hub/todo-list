@@ -1,24 +1,30 @@
-const todos = JSON.parse(localStorage.getItem('todos')) || [];
+const todos = JSON.parse(localStorage.getItem("todos")) || [];
 
 // selectors
 const todoItems = document.querySelector(".todo-items");
 const input = document.getElementById("input");
-const form = document.querySelector('.form-container');
+const form = document.querySelector(".form-container");
 
 // Functions
 export const getTodos = () => {
   const items = todos.sort((a, b) => b.index - a.index);
-  if(localStorage.getItem('todos')){
+  if (localStorage.getItem("todos")) {
     items.map((todo) => {
       const todoElement = document.createElement("li");
       todoElement.classList.add("todo");
       todoElement.setAttribute("id", todo.index);
       const todoElMarkup = `
                 <div class="content-container">
-                <i class="fa fa-check-square check" aria-hidden="true" id="${todo.index}"></i>
-                <p>${todo.description}</p>
+                <input type="checkbox" id="${todo.description}-${
+        todo.index
+      }" name="tasks" ${todo.completed ? "checked" : ""}>
+                <p ${!todo.completed ? "contenteditable" : ""}>${
+        todo.description
+      }</p>
                 </div>
-                <i class="fa fa-ellipsis-v" aria-hidden="true" id="${todo.index}"></i>
+                <i class="fa fa-ellipsis-v" aria-hidden="true" id="${
+                  todo.index
+                }"></i>
               `;
       todoElement.innerHTML = todoElMarkup;
       todoItems.appendChild(todoElement);
@@ -44,10 +50,16 @@ export const addTodo = () => {
       todoElement.setAttribute("id", todo.index);
       const todoElMarkup = `
               <div class="content-container">
-              <i class="fa fa-check-square check" aria-hidden="true" id="${todo.index}"></i>
-              <p>${todo.description}</p>
+              <input type="checkbox" id="${todo.description}-${
+        todo.id
+      }" name="tasks" ${todo.completed ? "checked" : ""}>
+              <p ${!todo.completed ? "contenteditable" : ""}>${
+        todo.description
+      }</p>
               </div>
-              <i class="fa fa-ellipsis-v" aria-hidden="true" id="${todo.index}"></i>
+              <i class="fa fa-ellipsis-v" aria-hidden="true" id="${
+                todo.index
+              }"></i>
             `;
       todoElement.innerHTML = todoElMarkup;
       todoItems.appendChild(todoElement);
@@ -56,4 +68,32 @@ export const addTodo = () => {
   });
 };
 
+export const updateTodo = (todoId, el) => {
+  const todo = todos.find((todo) => todo.index === parseInt(todoId, 10));
+  if (el.hasAttribute("contenteditable")) {
+    todo.description = el.textContent;
+  } else {
+    const p = el.nextElementSibling;
+    todo.completed = !todo.completed;
+    if (todo.completed) {
+      p.removeAttribute("contenteditable");
+      el.setAttribute("checked", "");
+    } else {
+      el.removeAttribute("checked");
+      p.setAttribute("contenteditable", "");
+    }
+  }
+  localStorage.setItem("todos", JSON.stringify(todos));
+};
+
 //Listeners
+todoItems.addEventListener("input", (e) => {
+  const todoId = e.target.closest("li").id;
+  updateTodo(todoId, e.target);
+});
+
+todoItems.addEventListener("keydown", (e) => {
+  if (e.keyCode === 13) {
+    e.preventDefault();
+  }
+});
