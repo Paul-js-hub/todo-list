@@ -1,29 +1,125 @@
+"use strict";
 (self["webpackChunkwebpack_setup"] = self["webpackChunkwebpack_setup"] || []).push([[0],[
 /* 0 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_todos_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var _modules_todos_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 
 
 
-_modules_todos_js__WEBPACK_IMPORTED_MODULE_0___default()();
+
+const todoItems = document.querySelector(".todo-items");
+
+
+(0,_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.getTodos)();
+(0,_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.addTodo)();
+(0,_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.updateTodo)();
 
 
 /***/ }),
 /* 1 */
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addTodo": () => (/* binding */ addTodo),
+/* harmony export */   "getTodos": () => (/* binding */ getTodos),
+/* harmony export */   "updateTodo": () => (/* binding */ updateTodo)
+/* harmony export */ });
+const todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+// selectors
+const todoItems = document.querySelector(".todo-items");
+const input = document.getElementById("input");
+const form = document.querySelector('.form-container');
+
+todoItems.addEventListener('input', (e) =>{
+  const todoId = e.target.closest("li").id;
+  updateTodo(todoId, e.target);
+});
+
+// Functions
+const getTodos = () => {
+  const items = todos.sort((a, b) => b.index - a.index);
+  if(localStorage.getItem('todos')){
+    items.map((todo) => {
+      const todoElement = document.createElement("li");
+      todoElement.classList.add("todo");
+      todoElement.setAttribute("id", todo.index);
+      const todoElMarkup = `
+                <div class="content-container">
+                <input type="checkbox" id="${todo.description}-${todo.index}" name="tasks" ${
+                  todo.completed ? "checked" : ""
+                }>
+                <p ${!todo.completed ? "contenteditable" : ""}>${todo.description}</p>
+                </div>
+                <i class="fa fa-ellipsis-v" aria-hidden="true" id="${todo.index}"></i>
+              `;
+      todoElement.innerHTML = todoElMarkup;
+      todoItems.appendChild(todoElement);
+    });
+  }
+};
+
+const addTodo = () => {
+  const items = todos.sort((a, b) => b.index - a.index);
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (input.value !== "") {
+      let todo = {
+        index: todos.length + 1,
+        description: input.value,
+        completed: false,
+      };
+      items.push(todo);
+      window.location.reload();
+      localStorage.setItem("todos", JSON.stringify(todos));
+      const todoElement = document.createElement("li");
+      todoElement.classList.add("todo");
+      todoElement.setAttribute("id", todo.index);
+      const todoElMarkup = `
+              <div class="content-container">
+              <input type="checkbox" id="${todo.description}-${todo.id}" name="tasks" ${
+                todo.completed ? "checked" : ""
+              }>
+              <p ${!todo.completed ? "contenteditable" : ""}>${todo.description}</p>
+              </div>
+              <i class="fa fa-ellipsis-v" aria-hidden="true" id="${todo.index}"></i>
+            `;
+      todoElement.innerHTML = todoElMarkup;
+      todoItems.appendChild(todoElement);
+      input.value = "";
+    }
+  });
+};
+
+const updateTodo = (todoId, el)=>{
+  const todo = todos.find(todo => todo.id === parseInt(todoId, 10));
+  if(el.hasAttribute("contentEditable")){
+    todo.description = el.textContent;
+  } else {
+    const p = el.nextElementSibling.nextElementSibling;
+    todo.completed = !todo.completed;
+    if (todo.completed) {
+      p.removeAttribute("contenteditable");
+      el.setAttribute("checked", "");
+    } else {
+      el.removeAttribute("checked");
+      p.setAttribute("contenteditable", "");
+    }
+  }
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+//Listeners
 
 
 /***/ }),
 /* 2 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -74,7 +170,6 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /* 3 */
 /***/ ((module) => {
 
-"use strict";
 
 
 var stylesInDOM = [];
@@ -184,7 +279,6 @@ module.exports = function (list, options) {
 /* 4 */
 /***/ ((module) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -260,7 +354,6 @@ module.exports = domAPI;
 /* 5 */
 /***/ ((module) => {
 
-"use strict";
 
 
 var memo = {};
@@ -305,7 +398,6 @@ module.exports = insertBySelector;
 /* 6 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -323,7 +415,6 @@ module.exports = setAttributesWithoutAttributes;
 /* 7 */
 /***/ ((module) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -340,7 +431,6 @@ module.exports = insertStyleElement;
 /* 8 */
 /***/ ((module) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -362,7 +452,6 @@ module.exports = styleTagTransform;
 /* 9 */
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -376,7 +465,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  background-color: #f4f2f3;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.container {\r\n  border: 1px solid #9497ae;\r\n  box-shadow: 0.05rem 0.05rem 2rem;\r\n  width: 40rem;\r\n  height: auto;\r\n  margin: 7rem auto;\r\n}\r\n\r\n.header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  width: auto;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  background-color: white;\r\n}\r\n\r\nh1 {\r\n  margin: 0;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.8rem;\r\n  color: black;\r\n}\r\n\r\n.refresh {\r\n  align-self: center;\r\n  color: #c4c6d8;\r\n  margin-right: 1rem;\r\n  cursor: pointer;\r\n}\r\n\r\n.todo-input {\r\n  background-color: white;\r\n  border-bottom: 1px solid #c4c6d8;\r\n}\r\n\r\ninput {\r\n  font-size: 1.5rem;\r\n  padding: 0.5rem;\r\n  font-family: Quintessential, sans-serif;\r\n  width: 85%;\r\n  border: none;\r\n  outline: none;\r\n  margin-left: 1rem;\r\n}\r\n\r\n.todo-items {\r\n  display: flex;\r\n  flex-direction: column;\r\n  background-color: white;\r\n}\r\n\r\n.todo {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  font-family: Quintessential, sans-serif;\r\n  gap: 1rem;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  font-size: 1.2rem;\r\n}\r\n\r\n.content-container {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 1rem;\r\n}\r\n\r\n.clear-completed {\r\n  text-align: center;\r\n  padding: 1rem;\r\n  color: #9497ae;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.5rem;\r\n}\r\n\r\n.clear-completed .complete {\r\n  cursor: pointer;\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  background-color: #f4f2f3;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.container {\r\n  border: 1px solid #9497ae;\r\n  box-shadow: 0.05rem 0.05rem 2rem;\r\n  width: 40rem;\r\n  height: auto;\r\n  margin: 7rem auto;\r\n}\r\n\r\n.header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  width: auto;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  background-color: white;\r\n}\r\n\r\nh1 {\r\n  margin: 0;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.8rem;\r\n  color: black;\r\n}\r\n\r\n.refresh {\r\n  align-self: center;\r\n  color: #c4c6d8;\r\n  margin-right: 1rem;\r\n  cursor: pointer;\r\n}\r\n\r\n.form-container {\r\n  background-color: white;\r\n  border-bottom: 1px solid #c4c6d8;\r\n}\r\n\r\ninput {\r\n  font-size: 1.5rem;\r\n  padding: 0.5rem;\r\n  font-family: Quintessential, sans-serif;\r\n  border: none;\r\n  outline: none;\r\n  margin-left: 1rem;\r\n}\r\n\r\n.todo-items {\r\n  display: flex;\r\n  flex-direction: column;\r\n  background-color: white;\r\n}\r\n\r\n.todo {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  font-family: Quintessential, sans-serif;\r\n  gap: 1rem;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  font-size: 1.2rem;\r\n}\r\n\r\n.content-container {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 1rem;\r\n}\r\n\r\n.clear-completed {\r\n  text-align: center;\r\n  padding: 1rem;\r\n  color: #9497ae;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.5rem;\r\n}\r\n\r\n.clear-completed .complete {\r\n  cursor: pointer;\r\n}\r\n\r\n.content-container [type=\"checkbox\"]:checked ~ p {\r\n  text-decoration: line-through;\r\n  opacity: 0.5;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -385,7 +474,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r
 /* 10 */
 /***/ ((module) => {
 
-"use strict";
 
 
 module.exports = function (i) {
@@ -396,7 +484,6 @@ module.exports = function (i) {
 /* 11 */
 /***/ ((module) => {
 
-"use strict";
 
 
 /*
