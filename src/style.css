@@ -37,8 +37,13 @@ h1 {
   font-size: 1.8rem;
   color: black;
 }
-p {
+.content-container > p {
   outline: none;
+  width: 90%;
+}
+
+.list-background {
+  background-color: #c4c6d8;
 }
 
 .trash, .fa-trash {
@@ -82,11 +87,14 @@ input {
   border-bottom: 1px solid #c4c6d8;
   font-size: 1.2rem;
 }
-
+.todo:hover{
+  background-color: #c4c6d8;
+}
 .content-container {
   display: flex;
   align-items: center;
   gap: 1rem;
+  width: 100%;
 }
 
 .clear-completed {
