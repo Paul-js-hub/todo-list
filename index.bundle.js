@@ -9,10 +9,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const todoItems = document.querySelector('.todo-items');
+
+const clear = document.querySelector('.clear-completed');
 
 (0,_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.getTodos)();
 (0,_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.addTodo)();
+(0,_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.deleteTodo)();
+
+clear.addEventListener('click', _modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.clearCompleted);
 
 
 /***/ }),
@@ -22,6 +26,8 @@ const todoItems = document.querySelector('.todo-items');
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addTodo": () => (/* binding */ addTodo),
+/* harmony export */   "clearCompleted": () => (/* binding */ clearCompleted),
+/* harmony export */   "deleteTodo": () => (/* binding */ deleteTodo),
 /* harmony export */   "getTodos": () => (/* binding */ getTodos),
 /* harmony export */   "updateTodo": () => (/* binding */ updateTodo)
 /* harmony export */ });
@@ -121,10 +127,19 @@ const deleteTodo = () => {
   });
 };
 
-deleteTodo();
+const clearCompleted = (e)=>{
+  e.preventDefault();
+  todos = todos.filter(todo => todo.completed !== true);
+  todos = todos.map((td, index) => {
+    td.index = (index + 1);
+    return td;
+  });
+  localStorage.setItem('todos', JSON.stringify(todos));
+  window.location.reload();
+}
 
 // Listeners
-todoItems.addEventListener('input', (e) => {
+todoItems.addEventListener('click', (e) => {
   const lastEl = e.target.parentNode.parentNode.lastElementChild;
   const todoId = e.target.closest('li').id;
   if (lastEl.classList.contains('fa-ellipsis-v')) {
@@ -139,6 +154,10 @@ todoItems.addEventListener('keydown', (e) => {
     e.preventDefault();
   }
 });
+
+
+
+
 
 /***/ }),
 /* 2 */
@@ -489,7 +508,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  background-color: #f4f2f3;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.container {\r\n  border: 1px solid #9497ae;\r\n  box-shadow: 0.05rem 0.05rem 2rem;\r\n  width: 40rem;\r\n  height: auto;\r\n  margin: 7rem auto;\r\n}\r\n\r\n.header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  width: auto;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  background-color: white;\r\n}\r\n\r\nh1 {\r\n  margin: 0;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.8rem;\r\n  color: black;\r\n}\r\n\r\n.content-container > p {\r\n  outline: none;\r\n  width: 90%;\r\n}\r\n\r\n.list-background {\r\n  background-color: #c4c6d8;\r\n}\r\n\r\n.trash,\r\n.fa-trash {\r\n  color: rgb(233, 47, 47);\r\n  cursor: pointer;\r\n}\r\n\r\n.refresh {\r\n  align-self: center;\r\n  color: #c4c6d8;\r\n  margin-right: 1rem;\r\n  cursor: pointer;\r\n}\r\n\r\n.form-container {\r\n  background-color: white;\r\n  border-bottom: 1px solid #c4c6d8;\r\n}\r\n\r\ninput {\r\n  font-size: 1.5rem;\r\n  padding: 0.5rem;\r\n  font-family: Quintessential, sans-serif;\r\n  border: none;\r\n  outline: none;\r\n  margin-left: 1rem;\r\n}\r\n\r\n.todo-items {\r\n  display: flex;\r\n  flex-direction: column;\r\n  background-color: white;\r\n}\r\n\r\n.todo {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  font-family: Quintessential, sans-serif;\r\n  gap: 1rem;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  font-size: 1.2rem;\r\n}\r\n\r\n.todo:hover {\r\n  background-color: #c4c6d8;\r\n}\r\n\r\n.content-container {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 1rem;\r\n  width: 100%;\r\n}\r\n\r\n.clear-completed {\r\n  text-align: center;\r\n  padding: 1rem;\r\n  color: #9497ae;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.5rem;\r\n}\r\n\r\n.clear-completed .complete {\r\n  cursor: pointer;\r\n}\r\n\r\n.content-container [type=\"checkbox\"]:checked ~ p {\r\n  text-decoration: line-through;\r\n  opacity: 0.5;\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  background-color: #f4f2f3;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.container {\r\n  border: 1px solid #9497ae;\r\n  box-shadow: 0.05rem 0.05rem 2rem;\r\n  width: 40rem;\r\n  height: auto;\r\n  margin: 7rem auto;\r\n}\r\n\r\n.header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  width: auto;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  background-color: white;\r\n}\r\n\r\nh1 {\r\n  margin: 0;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.8rem;\r\n  color: black;\r\n}\r\n\r\n.content-container > p {\r\n  outline: none;\r\n  width: 90%;\r\n}\r\n\r\n.list-background {\r\n  background-color: #c4c6d8;\r\n}\r\n\r\n.trash,\r\n.fa-trash {\r\n  color: rgb(233, 47, 47);\r\n  cursor: pointer;\r\n}\r\n\r\n.refresh {\r\n  align-self: center;\r\n  color: #c4c6d8;\r\n  margin-right: 1rem;\r\n  cursor: pointer;\r\n}\r\n\r\n.form-container {\r\n  background-color: white;\r\n  border-bottom: 1px solid #c4c6d8;\r\n}\r\n\r\ninput {\r\n  font-size: 1.5rem;\r\n  padding: 0.5rem;\r\n  font-family: Quintessential, sans-serif;\r\n  border: none;\r\n  outline: none;\r\n  margin-left: 1rem;\r\n}\r\n\r\n.todo-items {\r\n  display: flex;\r\n  flex-direction: column;\r\n  background-color: white;\r\n}\r\n\r\n.todo {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  font-family: Quintessential, sans-serif;\r\n  gap: 1rem;\r\n  padding: 1rem;\r\n  border-bottom: 1px solid #c4c6d8;\r\n  font-size: 1.2rem;\r\n}\r\n\r\n.todo:hover {\r\n  background-color: #c4c6d8;\r\n}\r\n\r\n.content-container {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 0.1rem;\r\n  width: 100%;\r\n}\r\n\r\n.clear-completed {\r\n  text-align: center;\r\n  padding: 1rem;\r\n  color: #9497ae;\r\n  font-family: Quintessential, sans-serif;\r\n  font-size: 1.5rem;\r\n}\r\n\r\n.complete {\r\n  cursor: pointer;\r\n}\r\n\r\n.clear-completed :hover {\r\n  cursor: pointer;\r\n  text-decoration: underline;\r\n}\r\n\r\n.content-container [type=\"checkbox\"]:checked ~ p {\r\n  text-decoration: line-through;\r\n  opacity: 0.5;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
