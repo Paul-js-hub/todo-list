@@ -76,7 +76,7 @@ export const updateTodo = (todoId, el) => {
   localStorage.setItem('todos', JSON.stringify(todos));
 };
 
-const deleteTodo = () => {
+export const deleteTodo = () => {
   todoItems.addEventListener('click', (e) => {
     if (
       e.target.classList.contains('fa-trash')
@@ -94,7 +94,16 @@ const deleteTodo = () => {
   });
 };
 
-deleteTodo();
+export const clearCompleted = (e)=>{
+  e.preventDefault();
+  todos = todos.filter(todo => todo.completed !== true);
+  todos = todos.map((td, index) => {
+    td.index = (index + 1);
+    return td;
+  });
+  localStorage.setItem('todos', JSON.stringify(todos));
+  window.location.reload();
+}
 
 // Listeners
 todoItems.addEventListener('click', (e) => {
@@ -112,3 +121,6 @@ todoItems.addEventListener('keydown', (e) => {
     e.preventDefault();
   }
 });
+
+
+
