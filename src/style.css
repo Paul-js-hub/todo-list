@@ -97,7 +97,7 @@ input {
 .content-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.1rem;
   width: 100%;
 }
 
@@ -109,8 +109,13 @@ input {
   font-size: 1.5rem;
 }
 
-.clear-completed .complete {
+.complete {
   cursor: pointer;
+}
+
+.clear-completed :hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .content-container [type="checkbox"]:checked ~ p {

@@ -1,7 +1,12 @@
-import { getTodos, addTodo } from './modules/todos.js';
+import {
+  getTodos, addTodo, deleteTodo, clearCompleted,
+} from './modules/todos.js';
 import './style.css';
 
-const todoItems = document.querySelector('.todo-items');
+const clear = document.querySelector('.clear-completed');
 
 getTodos();
 addTodo();
+deleteTodo();
+
+clear.addEventListener('click', clearCompleted);
