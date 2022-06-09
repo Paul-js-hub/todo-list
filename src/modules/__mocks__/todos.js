@@ -11,3 +11,20 @@ export const deleteTodo = (todos, id) => {
   }
   return newTodos;
 };
+
+export const clearCompleted = (todos)=>{
+  let newTodos = todos.filter(todo => todo.completed !== true);
+  return newTodos;
+}
+
+export const updateTodo = (todos, index, text)=>{
+  const newTodos = todos.map((element) => {
+    if (element.index === parseInt(index)) {
+      element.description = text;
+      return element;
+    }
+    return element;
+  });
+
+  return newTodos;
+}
