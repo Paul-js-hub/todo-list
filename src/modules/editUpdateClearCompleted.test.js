@@ -2,7 +2,7 @@ import {
   clearCompleted,
   updateTodo,
   updateStatus,
-} from './todos.js';
+} from './__mocks__/todos.js';
 
 jest.mock('./todos');
 
