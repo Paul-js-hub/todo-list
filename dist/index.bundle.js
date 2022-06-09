@@ -9,7 +9,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const clear = document.querySelector('.clear-completed');
 
 (0,_modules_todos_js__WEBPACK_IMPORTED_MODULE_0__.getTodos)();
@@ -127,16 +126,16 @@ const deleteTodo = () => {
   });
 };
 
-const clearCompleted = (e)=>{
+const clearCompleted = (e) => {
   e.preventDefault();
-  todos = todos.filter(todo => todo.completed !== true);
+  todos = todos.filter((todo) => todo.completed !== true);
   todos = todos.map((td, index) => {
     td.index = (index + 1);
     return td;
   });
   localStorage.setItem('todos', JSON.stringify(todos));
   window.location.reload();
-}
+};
 
 // Listeners
 todoItems.addEventListener('click', (e) => {
@@ -154,9 +153,6 @@ todoItems.addEventListener('keydown', (e) => {
     e.preventDefault();
   }
 });
-
-
-
 
 
 /***/ }),
